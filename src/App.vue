@@ -1,17 +1,31 @@
 <template>
-  <input
-    type="text"
-    placeholder="Search"
-    v-model="query"
-    @keypress="loadData"
-  />
-  <!-- <div v-if="weather?.main">{{ weather.name }}</div> -->
-  <div>{{ weather.name }}</div>
+  <div
+    :class="bgColor"
+    class="w-full h-[100vh] bg-yellow-200 p-4 flex flex-col"
+  >
+    <input
+      type="text"
+      placeholder="Search"
+      v-model="query"
+      @keypress="loadData"
+      class="w-full h-10 rounded-md p-3 outline-none mt-5 text-slate-500 mx-auto lg:w-[800px]"
+    />
+    <section
+      class="mt-14 flex flex-col items-center gap-5 text-center"
+      v-if="typeoff"
+    >
+      <div class="flex flex-col">
+        <h2>{{ weather?.name }},{{ weather?.sys?.country }}</h2>
+        <h3>Monday</h3>
+      </div>
+      <h1>{{ Math.round(weather?.main?.temp) }}°c</h1>
+      <h2>{{ weather.weather[0].main }}</h2>
+    </section>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
-import { ref } from "vue";
 
 export default {
   data() {
@@ -28,11 +42,30 @@ export default {
           `https://api.openweathermap.org/data/2.5/weather?q=${this.query}&units=metric&appid=${this.apiKey}`
         );
         this.weather = response.data;
-        console.log(response.data);
+      }
+    },
+  },
+  computed: {
+    typeoff() {
+      return typeof this.weather.main != "undefined";
+    },
+    bgColor() {
+      if (this.weather?.main?.temp > 16) {
+        return "bg-orange-300";
+      } else {
+        return "bg-cyan-200";
       }
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: white;
+  font-family: "monserrat", sans-serif;
+}
+</style>
