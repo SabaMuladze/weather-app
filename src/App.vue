@@ -21,6 +21,7 @@
       <h1>{{ Math.round(weather?.main?.temp) }}°c</h1>
       <h2>{{ weather.weather[0].main }}</h2>
     </section>
+    <h2 class="mx-auto mt-20" v-else>Search City</h2>
   </div>
 </template>
 
