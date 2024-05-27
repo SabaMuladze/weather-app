@@ -5,7 +5,7 @@
   >
     <input
       type="text"
-      placeholder="Search"
+      placeholder="Search for a city"
       v-model="query"
       @keypress="loadData"
       class="w-full h-10 rounded-md p-3 outline-none mt-5 text-slate-500 mx-auto lg:w-[800px]"
